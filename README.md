@@ -42,9 +42,9 @@ month;data
 
 ## Screenshots:
 
-<img src="/screenshots/ss(1).png"/>
-<img src="/screenshots/ss(2).png"/>
-<img src="/screenshots/ss(3).png"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(1).png" width="250"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(2).png" width="250"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(3).png" width="250"/>
 
 
 
