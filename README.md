@@ -27,7 +27,7 @@ For installing the required libraries
 	$ pip install -r requirements.txt
 After that you can start
 
-	$ python source.py
+	$ python N-StepPredictor.py
 The supported dataset format is:
 ````
 month;data
