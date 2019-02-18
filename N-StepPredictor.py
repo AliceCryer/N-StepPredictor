@@ -342,7 +342,12 @@ def check_predict_fields():
     if [i for i in model_is_ready_to_predict if i is False]:
         messagebox.showinfo('Error: Missing Value', 'All field must be set. Please check it  and try again ')
     else:
-        predict_function()
+        try:
+            predict_function()
+        except :
+            messagebox.showinfo('Logical Error',
+                                'please choose a suitable values for the prediction model')
+
 
 
 def predict_function():
