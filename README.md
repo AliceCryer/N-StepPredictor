@@ -13,12 +13,9 @@ In addition you can learn the values of n-step ahead of your time series dataset
 in this project the ***lags*** term my be used in wrong place i will explain it above:
 if you set the value of the lags to "1,2,3" the model will get the three values (1,2,3) and predict the next value [predict one value from many values]
 
-***Ex:***
-```mermaid
-graph LR
-A[1,2,3] -- predict --> B((4))
-c[5,6,9,11] -- predict --> d((12))
-```
+
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(0).png" width="500"/>
+
 
 ### Usage: 
 
