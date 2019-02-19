@@ -20,10 +20,14 @@ if you set the value of the lags to "1,2,3" the model will get the three values 
 
 ### Usage: 
 
+	$ git clone https://github.com/IhsnSULAIMAN/N-StepPredictor.git
+	$ cd N-StepPredictor
+
 For installing the required libraries
 
 	$ pip install -r requirements.txt
-After that you can start
+
+And it's ready:
 
 	$ python N-StepPredictor.py
 The supported dataset format is:
