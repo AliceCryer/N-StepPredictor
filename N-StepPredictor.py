@@ -349,7 +349,6 @@ def check_predict_fields():
                                 'please choose a suitable values for the prediction model')
 
 
-
 def predict_function():
     global first_value
     predict_array, f = [], []
