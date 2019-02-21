@@ -339,9 +339,10 @@ def train_function():
         if counter == (max_neuron + 1):
             x_train, y_train = prepare_data(train, inputs_indices, outputs_indices)
             mdl.add(Dense(best_layer_number, input_dim=inputs_nmbr, activation='relu'))
+            mdl.add(Dense(best_layer_number*2))
         else:
             mdl.add(Dense(counter, input_dim=inputs_nmbr, activation='relu'))
-        mdl.add(Dense(64))
+            mdl.add(Dense(counter*2))
         mdl.add(Dense(outputs_nmbr))
         mdl.compile(loss='mean_squared_error', optimizer='adam')
 
