@@ -14,6 +14,13 @@ In addition you can learn the values of n-step ahead of your time series dataset
 You know that the selling rates of the last two days are affect the next day selling rates then you can set the input indices to 1,2 and the terget to 3 then train the model with your dataset, after that set the first values to the last two days selling rates and make the model predict the next days selling rates for a month.
 
 
+**Note:**
+The predicted values are saved as csv files.
+
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss(4).png" width="250"/>
+
+
+
 ### Usage: 
 
 	$ git clone https://github.com/IhsnSULAIMAN/N-StepPredictor.git
