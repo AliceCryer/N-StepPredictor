@@ -6,7 +6,7 @@ A **time series** is a series of [data points](http://www.wikizero.biz/index.php
 
 for more information: [https://en.wikipedia.org/wiki/Time_series](https://en.wikipedia.org/wiki/Time_series "Time Series")
 
-### Why should i use this project ?
+### Why should I use this project ?
 With this project you can find the most suitable MLP model for your dataset in the range of number of neurons, input indices and target indices you have chosen and save it for later uses.  
 In addition you can learn the values of n-step ahead of your time series dataset and the autocorrelation coefficient between the input values and target values you choosed (work just when the input indices number and the target indices number is equal).
 
