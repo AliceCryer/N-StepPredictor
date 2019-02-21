@@ -15,9 +15,6 @@ in this project the ***lags*** term my be used in wrong place i will explain it 
 if you set the value of the lags to "1,2,3" the model will get the three values (1,2,3) and predict the next value [predict one value from many values]
 
 
-<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(0).png" width="500"/>
-
-
 ### Usage: 
 
 	$ git clone https://github.com/IhsnSULAIMAN/N-StepPredictor.git
@@ -44,9 +41,9 @@ month;data
 
 ## Screenshots:
 
-<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(1).png" width="250"/>
-<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(2).png" width="250"/>
-<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss%20(3).png" width="250"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss(1).png" width="250"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss(2).png" width="250"/>
+<img src="https://github.com/IhsnSULAIMAN/N-StepPredictor/raw/master/screenshots/ss(3).png" width="250"/>
 
 
 
