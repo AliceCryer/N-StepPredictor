@@ -1,15 +1,17 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-            
-             _   _        _____ _              ______             _ _      _
-            | \ | |      /  ___| |             | ___ \           | (_)    | |
-            |  \| |______\ `--.| |_ ___ _ __   | |_/ / __ ___  __| |_  ___| |_ ___  _ __
-            | . ` |______|`--. \ __/ _ \ '_ \  |  __/ '__/ _ \/ _` | |/ __| __/ _ \| '__|
-            | |\  |      /\__/ / ||  __/ |_) | | |  | | |  __/ (_| | | (__| || (_) | |
-            \_| \_/      \____/ \__\___| .__/  \_|  |_|  \___|\__,_|_|\___|\__\___/|_|
-                                       | |
-                                       |_|
-                                                                    twitter: ihsnsulaiman
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+#
+#
+#                     _   _        _____ _              ______             _ _      _
+#                    | \ | |      /  ___| |             | ___ \           | (_)    | |
+#                    |  \| |______\ `--.| |_ ___ _ __   | |_/ / __ ___  __| |_  ___| |_ ___  _ __
+#                    | . ` |______|`--. \ __/ _ \ '_ \  |  __/ '__/ _ \/ _` | |/ __| __/ _ \| '__|
+#                    | |\  |      /\__/ / ||  __/ |_) | | |  | | |  __/ (_| | | (__| || (_) | |
+#                    \_| \_/      \____/ \__\___| .__/  \_|  |_|  \___|\__,_|_|\___|\__\___/|_|
+#                                               | |
+#                                               |_|
+#                                                                            twitter: ihsnsulaiman
+#
+#
+
 
 import pandas as pd
 import numpy as np
@@ -25,21 +27,23 @@ import tkinter.font
 # set seed
 np.random.seed(7)
 
-# initial the variables
+# initial the global variables
 data = None
 train_train = []
 train_test = []
 train = []
 x_train = []
-lags = 1
-lags_value = []
+inputs_nmbr = 1
+inputs_indices = []
+outputs_nmbr = 2
+outputs_indices = []
 step_number = 0
-first_value = -1
+first_values = []
 UI = None
 mdl = None
 min_neuron = 1
 max_neuron = 5
-last_data_index = []
+last_input_indices = []
 
 # initialize the fields check arrays
 model_is_ready_to_train = [False, False, False]
@@ -76,15 +80,22 @@ class AppUI(Tk):
 
         # The third row
         self.fm3 = Frame(self, relief=RAISED, borderwidth=1)
-        self.lags_lbl = Label(self.fm3, text="Lags : ", font=("Arial Bold", 8))
-        self.lags_lbl.pack(side=LEFT, padx=5, pady=5)
-        self.set_lags_btn = Button(self.fm3, text="set", command=self.set_lags)
-        self.set_lags_btn.pack(side=RIGHT, padx=5, pady=5)
-        self.lags_entry = Entry(self.fm3, width=15)
-        self.lags_entry.insert(END, '1,2,3')
-        self.lags_entry.pack(side=RIGHT, padx=5, pady=5)
-        self.lags_progress_txt = Label(self.fm3, text="", font=("Arial Bold", 9))
-        self.lags_progress_txt.pack(side=RIGHT, padx=5, pady=5)
+        self.inputs_nmbr_lbl = Label(self.fm3, text="indices : ", font=("Arial Bold", 8))
+        self.inputs_nmbr_lbl.pack(side=LEFT, padx=5, pady=5)
+        self.inputs_nmbr_lbl = Label(self.fm3, text="input: ", font=("Arial", 8))
+        self.inputs_nmbr_lbl.pack(side=LEFT, padx=5, pady=5)
+        self.inputs_nmbr_entry = Entry(self.fm3, width=10)
+        self.inputs_nmbr_entry.insert(END, '1,2,3')
+        self.inputs_nmbr_entry.pack(side=LEFT, padx=5, pady=5)
+        self.outputs_nmbr_lbl = Label(self.fm3, text="target: ", font=("Arial", 8))
+        self.outputs_nmbr_lbl.pack(side=LEFT, padx=5, pady=5)
+        self.outputs_nmbr_entry = Entry(self.fm3, width=10)
+        self.outputs_nmbr_entry.insert(END, '4,5,6')
+        self.outputs_nmbr_entry.pack(side=LEFT, padx=5, pady=5)
+        self.set_indices_btn = Button(self.fm3, text="set", command=self.set_indices)
+        self.set_indices_btn.pack(side=RIGHT, padx=5, pady=5)
+        self.inputs_nmbr_progress_txt = Label(self.fm3, text="", font=("Arial Bold", 9))
+        self.inputs_nmbr_progress_txt.pack(side=RIGHT, padx=5, pady=5)
         self.fm3.pack(fill=BOTH, side=TOP, expand=True)
 
         # The fourth row
@@ -107,12 +118,12 @@ class AppUI(Tk):
 
         # The sixth row
         self.fm6 = Frame(self, relief=RAISED, borderwidth=1)
-        self.first_value_lbl = Label(self.fm6, text="Your first value : ", font=("Arial Bold", 8))
-        self.first_value_lbl.pack(side=LEFT, padx=5, pady=5)
-        self.first_value_btn = Button(self.fm6, text="set", command=self.set_first_value)
-        self.first_value_btn.pack(side=RIGHT, padx=5, pady=5)
-        self.first_value_entry = Entry(self.fm6, width=5)
-        self.first_value_entry.pack(side=RIGHT, padx=5, pady=5)
+        self.first_values_lbl = Label(self.fm6, text="Your first value : ", font=("Arial Bold", 8))
+        self.first_values_lbl.pack(side=LEFT, padx=5, pady=5)
+        self.first_values_btn = Button(self.fm6, text="set", command=self.set_first_values)
+        self.first_values_btn.pack(side=RIGHT, padx=5, pady=5)
+        self.first_values_entry = Entry(self.fm6, width=10)
+        self.first_values_entry.pack(side=RIGHT, padx=5, pady=5)
         self.fm6.pack(fill=BOTH, side=TOP, expand=True)
 
         # The seventh row
@@ -145,33 +156,53 @@ class AppUI(Tk):
             model_is_ready_to_train[1] = True
 
     # FUNCTION FOR LETTING THE USER SET MORE THEN ONE LAG
-    def set_lags(self):
+    def set_indices(self):
 
-        global lags, lags_value
-        lags_value = []
+        global inputs_nmbr, inputs_indices, outputs_nmbr, outputs_indices
+        inputs_indices = []
+        outputs_indices = []
         model_is_ready_to_train[2] = True
-        lags_tmp = self.lags_entry.get()
-        if (lags_tmp[0] == ",") or (lags_tmp[len(lags_tmp)-1] == ","):
+
+        inputs_nmbr_tmp = self.inputs_nmbr_entry.get()
+        if (inputs_nmbr_tmp[0] == ",") or (inputs_nmbr_tmp[len(inputs_nmbr_tmp)-1] == ","):
             model_is_ready_to_train[2] = False
-        lags = 0
-        for x in lags_tmp.split(","):
+        inputs_nmbr = 0
+        for x in inputs_nmbr_tmp.split(","):
             if x.isdigit():
-                lags_value.append(int(x))
-                lags += 1
+                inputs_indices.append(int(x))
+                inputs_nmbr += 1
             else:
                 model_is_ready_to_train[2] = False
                 messagebox.showinfo('Error: Wrong Value',
-                                    "- please enter correct lags value\n"
+                                    "- please enter correct indices for 'input' values\n"
                                     "  Ex: 2,5,7,10")
                 break
 
-        if lags_value is []:
+        outputs_nmbr_tmp = self.outputs_nmbr_entry.get()
+        if (outputs_nmbr_tmp[0] == ",") or (outputs_nmbr_tmp[len(outputs_nmbr_tmp) - 1] == ","):
+            model_is_ready_to_train[2] = False
+        outputs_nmbr = 0
+        for y in outputs_nmbr_tmp.split(","):
+            if y.isdigit():
+                outputs_indices.append(int(y))
+                outputs_nmbr += 1
+            else:
+                model_is_ready_to_train[2] = False
+                messagebox.showinfo('Error: Wrong Value',
+                                    "- please enter correct indices for 'output' values\n"
+                                    "  Ex: 2,5,7,10")
+                break
+
+        if inputs_indices is [] or outputs_indices is []:
             model_is_ready_to_train[2] = False
 
-        if data is not None:
-            acl_data, _ = prepare_data(train, lags_value)
-            self.lags_progress_txt.configure(text="Autocorrelation is {}".format(round(acl_func(acl_data, lags), 3)))
+        if (data is not None) and (inputs_nmbr is outputs_nmbr):
+            acl_data_x, acl_data_y = prepare_data(train, inputs_indices, outputs_indices)
+            self.inputs_nmbr_progress_txt.configure(text="Autocorrelation is {}"
+                                                    .format(round(acl_func(acl_data_x, outputs_indices[0]), 3)))
             self.update()
+        else:
+            self.inputs_nmbr_progress_txt.configure(text="")
 
     def set_steps(self):
         global step_number, model_is_ready_to_predict
@@ -182,12 +213,24 @@ class AppUI(Tk):
         if step_number:
             model_is_ready_to_predict[1] = True
 
-    def set_first_value(self):
-        global first_value, model_is_ready_to_predict
-        frsttmp = self.first_value_entry.get()
-        first_value = int(frsttmp) if isitnumber(frsttmp) is True else None
-        if first_value:
-            model_is_ready_to_predict[2] = True
+    def set_first_values(self):
+        global first_values, model_is_ready_to_predict
+        frsttmp = self.first_values_entry.get()
+        model_is_ready_to_predict[2] = True
+        first_values = []
+        for x in frsttmp.split(","):
+            if x.isdigit():
+                first_values.append(int(x))
+            else:
+                model_is_ready_to_predict[2] = False
+                messagebox.showinfo('Error: Wrong Value',
+                                    "- you have to enter " + str(inputs_nmbr) + " numbers seperated by (,)\n")
+                break
+        if len(first_values) is not inputs_nmbr:
+            model_is_ready_to_predict[2] = False
+            first_values = []
+            messagebox.showinfo('Error: Wrong Value',
+                                "- you have to enter " + str(inputs_nmbr) + " input seperated by (,)\n")
 
 
 def get_data_set():
@@ -208,10 +251,9 @@ def get_data_set():
         data_length = len(data)
 
         # slice the data
-        train_train = data[0:(data_length*80//100), :]                                                # 80%
-        train_test = data[(data_length*80//100):data_length, :]                                       # 20%
-
-        train = data[:, :]                                                                            # 100%
+        train_train = data[0:(data_length*80//100), :]           # 80%
+        train_test = data[(data_length*80//100):data_length, :]  # 20%
+        train = data[:, :]                                       # 100%
 
         if data is not None:
             model_is_ready_to_train[0] = True
@@ -221,35 +263,40 @@ def isitnumber(usr_input):
     return usr_input.replace('.', '', 1).isdigit()
 
 
-def prepare_data(data, lags_value):
+def prepare_data(data, inputs_indices, outputs_indices):
     """
     Create lagged data from an input time series
     """
-    global last_data_index
+    global last_input_indices, last_output_indices
     x, y = [], []
-    for row in range(len(data) - lags_value[-1]):
-        a = []
-        for lags_row in lags_value:
-            a.append(data[lags_row-1, 0])
+    cntr = len(data) - outputs_indices[-1]
+    for x_row in range(cntr):
+        a, b = [], []
+        for inputs_nmbr_row in inputs_indices:
+            a.append(data[inputs_nmbr_row-1, 0])
         x.append(a)
-        y.append(data[lags_value[-1], 0])
 
-        lags_value = [t+1 for t in lags_value]
+        for outputs_nmbr_row in outputs_indices:
+            b.append(data[outputs_nmbr_row-1, 0])
+        y.append(b)
 
-    last_data_index = [t-2 for t in lags_value]
+        inputs_indices = [t + 1 for t in inputs_indices]
+        outputs_indices = [t+1 for t in outputs_indices]
 
+    last_input_indices = [t-2 for t in inputs_indices]
+    last_output_indices = [t-2 for t in outputs_indices]
     return np.array(x), np.array(y)
 
 
-def acl_func(acl_data, lags):
-    acl_data = acl_data.flatten()
-    mean = np.mean(acl_data)
+def acl_func(acl_data_x, lags):
+    acldata = acl_data_x.flatten()
+    mean = np.mean(acldata)
     numerator = 0
     denominator = 0
-    for i in range(0, len(acl_data)-lags-1):
-        numerator += (acl_data[i] - mean)*(acl_data[i+lags] - mean)
-    for i in range(0, len(acl_data)-1):
-        denominator += (acl_data[i] - mean)**2
+    for i in range(0, len(acldata)-lags):
+        numerator += (acldata[i] - mean)*(acldata[i+lags] - mean)
+    for i in range(0, len(acldata)-1):
+        denominator += (acldata[i] - mean)**2
     return numerator/denominator
 
 
@@ -263,15 +310,15 @@ def check_train_fields():
             train_function()
         except :
             messagebox.showinfo('Logical Error',
-                                'please choose a suitable lags values for your dataset and try again.')
+                              'please choose a suitable inputs_nmbr values for your dataset and try again.')
 
 
 def train_function():
     global model_is_ready_to_predict, mdl, UI, x_train
 
     # prepare the data
-    x_train, y_train = prepare_data(train_train, lags_value)
-    x_test, y_test = prepare_data(train_test, lags_value)
+    x_train, y_train = prepare_data(train_train, inputs_indices, outputs_indices)
+    x_test, y_test = prepare_data(train_test, inputs_indices, outputs_indices)
 
     UI.progress["maximum"] = 100
     best_layer_number = -1
@@ -288,19 +335,18 @@ def train_function():
 
         # create the model
         mdl = Sequential()
-
         # prepare for the main model
         if counter == (max_neuron + 1):
-            x_train, y_train = prepare_data(train, lags_value)
-            mdl.add(Dense(best_layer_number, input_dim=lags, activation='relu'))
+            x_train, y_train = prepare_data(train, inputs_indices, outputs_indices)
+            mdl.add(Dense(best_layer_number, input_dim=inputs_nmbr, activation='relu'))
         else:
-            mdl.add(Dense(counter, input_dim=lags, activation='relu'))
-
-        mdl.add(Dense(1))
+            mdl.add(Dense(counter, input_dim=inputs_nmbr, activation='relu'))
+        mdl.add(Dense(64))
+        mdl.add(Dense(outputs_nmbr))
         mdl.compile(loss='mean_squared_error', optimizer='adam')
 
         # start the training
-        mdl.fit(x_train, y_train, epochs=100, batch_size=1, verbose=2)
+        mdl.fit(x_train, y_train, epochs=150, batch_size=1, verbose=2)
 
         # estimate model performance
         train_score = mdl.evaluate(x_train, y_train, verbose=0)
@@ -342,24 +388,36 @@ def check_predict_fields():
     if [i for i in model_is_ready_to_predict if i is False]:
         messagebox.showinfo('Error: Missing Value', 'All field must be set. Please check it  and try again ')
     else:
-        try:
-            predict_function()
-        except :
-            messagebox.showinfo('Logical Error',
-                                'please choose a suitable values for the prediction model')
+        #try:
+        predict_function()
+        # except :
+        #     messagebox.showinfo('Logical Error',
+        #                         'please choose a suitable values for the prediction model')
 
 
 def predict_function():
-    global first_value
-    predict_array, f = [], []
-    f = x_train[-1]
+    global first_values
+    predict_array, predicted_array, f = [], [], []
+    predict_array.append(first_values)
     for i in range(step_number):
-        f = f[1:]
-        f = np.append(f, first_value)
-        predict_array.append(f)
-        last_predicted_array = mdl.predict(np.array(predict_array))
-        UI.results_dump.insert(INSERT, str(i) + " : " + str(last_predicted_array[-1]) + "\n")
-        first_value = last_predicted_array[-1]
+        predicted_array = mdl.predict(np.array(predict_array))
+        UI.results_dump.insert(INSERT, str(i) + " :  " + str(predicted_array[-1]) + "\n")
+
+        if inputs_nmbr > outputs_nmbr:
+            tmp = []
+            for c in range(inputs_nmbr-outputs_nmbr, 0, -1):
+                tmp.append(predict_array[-1][-1*c])
+            for d in predicted_array[-1]:
+                tmp.append(d)
+        elif inputs_nmbr < outputs_nmbr:
+            tmp = []
+            for c in range(inputs_nmbr, 0, -1):
+                tmp.append(predicted_array[-1][-1*c])
+        else:
+            tmp = predicted_array[-1]
+        predict_array.append(tmp)
+    np.savetxt("predicted_values_decimal_notation.csv", predicted_array, fmt='%f', delimiter=",")
+    np.savetxt("predicted_values_scientific_notation.csv", predicted_array, delimiter=",")
 
 
 def main():
