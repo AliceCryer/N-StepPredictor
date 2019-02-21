@@ -1,18 +1,17 @@
 # N-Step Time Series Predictor
 
+
 ### What is time series ?
 A **time series** is a series of [data points](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRGF0YV9wb2ludA "Data point") indexed (or listed or graphed) in time order. Most commonly, a time series is a [sequence](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvU2VxdWVuY2U "Sequence") taken at successive equally spaced points in time. Thus it is a sequence of [discrete-time](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRGlzY3JldGUtdGltZQ "Discrete-time") data.
 
 for more information: [https://en.wikipedia.org/wiki/Time_series](https://en.wikipedia.org/wiki/Time_series "Time Series")
 
 ### Why should i use this project ?
-With this project you can find the most suitable model for your dataset with the number of neurons and lags you have chosen and save it for later uses.  
-In addition you can learn the values of n-step ahead of your time series dataset and the autocorrelation coefficient of the lags values you choosed.
+With this project you can find the most suitable MLP model for your dataset in the range of number of neurons, input indices and target indices you have chosen and save it for later uses.  
+In addition you can learn the values of n-step ahead of your time series dataset and the autocorrelation coefficient between the input values and target values you choosed (work just when the input indices number and the target indices number is equal).
 
-
-> **Note:**
-in this project the ***lags*** term my be used in wrong place i will explain it below:
-if you set the value of the lags to "1,2,3" the model will get the three values (1,2,3) and predict the next value [predict one value from many values]
+### Example of use:
+You know that the selling rates of the last two days are affect the next day selling rates then you can set the input indices to 1,2 and the terget to 3 then train the model with your dataset, after that set the first values to the last two days selling rates and make the model predict the next days selling rates for a month.
 
 
 ### Usage: 
